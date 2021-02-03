@@ -19,7 +19,7 @@ public class Main {
 
         reader = new FileReader(FILE_PATH);
         digitList = new LinkedList<>();
-        load13DigitsIntoList();
+        loadDigitsIntoList();
         updateMax();
 
         while ((digit = reader.read()) != -1) {         // while unread digits remain
@@ -31,7 +31,7 @@ public class Main {
         System.out.println(maxProduct);
     }
 
-    private static void load13DigitsIntoList() throws IOException {
+    private static void loadDigitsIntoList() throws IOException {
         while (digitList.size() < DIGIT_LIMIT &&
                 (digit = reader.read()) != -1) {
             if (isValidDigit()) {
@@ -40,9 +40,7 @@ public class Main {
                     digitList.add(digit);
                 }
                 else {
-                    digitList.clear();
-                    currProduct = 1;
-                    load13DigitsIntoList();
+                    resetList();
                 }
             }
         }
@@ -54,15 +52,20 @@ public class Main {
         return digit != -1;
     }
 
+    private static void resetList() throws IOException {
+        digitList.clear();
+        currProduct = 1;
+        loadDigitsIntoList();
+        updateMax();
+    }
+
     private static void processDigit() throws IOException{
         if (digit > 0) {
             calculateMax();
             updateList();
         }
         else {
-            digitList.clear();
-            load13DigitsIntoList();
-            updateMax();
+            resetList();
         }
     }
 
