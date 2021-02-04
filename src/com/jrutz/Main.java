@@ -19,16 +19,22 @@ public class Main {
 
         reader = new FileReader(FILE_PATH);
         digitList = new LinkedList<>();
-        loadDigitsIntoList();
-        updateMax();
 
-        while ((digit = reader.read()) != -1) {         // while unread digits remain
+        loadDigitsIntoList();
+        updateMax();    // save product of first full list to maxProduct
+
+        processRemainingDigits();
+
+        System.out.println(maxProduct);
+    }
+
+    private static void processRemainingDigits() throws IOException {
+        while ((digit = reader.read()) != -1)
+        {
             if (isValidDigit()) {
                 processDigit();
             }
         }
-
-        System.out.println(maxProduct);
     }
 
     private static void loadDigitsIntoList() throws IOException {
